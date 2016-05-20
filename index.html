@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Elm 0.17 Theremin</title>
+    <script type="text/javascript" src="theremin.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var oscillator = audioCtx.createOscillator();
+      var gainNode = audioCtx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      var initialFreq = 1000;
+      var initialVol = 0.001;
+      oscillator.type = 'square';
+      oscillator.frequency.value = initialFreq;
+      oscillator.detune.value = 100;
+      oscillator.start(0);
+      gainNode.gain.value = initialVol;
+
+      var app = Elm.Theremin.fullscreen();
+      app.ports.audio.subscribe(function(soundModel) {
+        gainNode.gain.value = soundModel.gain;
+        oscillator.frequency.value = soundModel.frequency;
+      });
+    </script>
+  </body>
+</html>
