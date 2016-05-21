@@ -8051,30 +8051,32 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
-var _makemeunsee$elm_maxims$Theremin$toComponent = F2(
+var _makemeunsee$elm_theremin$Theremin$toComponent = F2(
 	function (d, theta) {
 		var k = 255 * A2(_elm_lang$core$Basics$min, 1, d);
 		return (_elm_lang$core$Native_Utils.cmp(theta, _elm_lang$core$Basics$pi / 3) < 0) ? k : ((_elm_lang$core$Native_Utils.cmp(theta, (2 * _elm_lang$core$Basics$pi) / 3) < 0) ? (((k * (((2 * _elm_lang$core$Basics$pi) / 3) - theta)) / _elm_lang$core$Basics$pi) * 3) : 0);
 	});
-var _makemeunsee$elm_maxims$Theremin$toComponentString = F2(
-	function (d, theta) {
-		return _elm_lang$core$Basics$toString(
-			_elm_lang$core$Basics$floor(
-				A2(_makemeunsee$elm_maxims$Theremin$toComponent, d, theta)));
-	});
-var _makemeunsee$elm_maxims$Theremin$withinPi = function (value) {
+var _makemeunsee$elm_theremin$Theremin$withinPi = function (value) {
 	return (_elm_lang$core$Native_Utils.cmp(value, _elm_lang$core$Basics$pi) > 0) ? (value - (2 * _elm_lang$core$Basics$pi)) : ((_elm_lang$core$Native_Utils.cmp(value, 0 - _elm_lang$core$Basics$pi) < 0) ? (value + (2 * _elm_lang$core$Basics$pi)) : value);
 };
-var _makemeunsee$elm_maxims$Theremin$rgb = F2(
+var _makemeunsee$elm_theremin$Theremin$rgb = F2(
 	function (x, y) {
 		var d = _elm_lang$core$Basics$sqrt((x * x) + (y * y));
-		var cmp = _makemeunsee$elm_maxims$Theremin$toComponentString(d);
+		var cmp = function (_p0) {
+			return _elm_lang$core$Basics$toString(
+				_elm_lang$core$Basics$floor(
+					A2(_makemeunsee$elm_theremin$Theremin$toComponent, d, _p0)));
+		};
 		var theta = A2(_elm_lang$core$Basics$atan2, y, x);
 		var thetaR = _elm_lang$core$Basics$abs(theta);
-		var thetaG = _elm_lang$core$Basics$abs(
-			_makemeunsee$elm_maxims$Theremin$withinPi(theta - ((2 * _elm_lang$core$Basics$pi) / 3)));
-		var thetaB = _elm_lang$core$Basics$abs(
-			_makemeunsee$elm_maxims$Theremin$withinPi(theta + ((2 * _elm_lang$core$Basics$pi) / 3)));
+		var thetaG = function (_p1) {
+			return _elm_lang$core$Basics$abs(
+				_makemeunsee$elm_theremin$Theremin$withinPi(_p1));
+		}(theta - ((2 * _elm_lang$core$Basics$pi) / 3));
+		var thetaB = function (_p2) {
+			return _elm_lang$core$Basics$abs(
+				_makemeunsee$elm_theremin$Theremin$withinPi(_p2));
+		}(theta + ((2 * _elm_lang$core$Basics$pi) / 3));
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
 			'rgb(',
@@ -8095,16 +8097,16 @@ var _makemeunsee$elm_maxims$Theremin$rgb = F2(
 								cmp(thetaB),
 								')'))))));
 	});
-var _makemeunsee$elm_maxims$Theremin$px = function (number) {
+var _makemeunsee$elm_theremin$Theremin$px = function (number) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
 		_elm_lang$core$Basics$toString(number),
 		'px');
 };
-var _makemeunsee$elm_maxims$Theremin$normedPosition = function (_p0) {
-	var _p1 = _p0;
-	var _p3 = _p1.size;
-	var _p2 = _p1.position;
+var _makemeunsee$elm_theremin$Theremin$normedPosition = function (_p3) {
+	var _p4 = _p3;
+	var _p6 = _p4.size;
+	var _p5 = _p4.position;
 	var side = A2(
 		F2(
 			function (x, y) {
@@ -8112,22 +8114,22 @@ var _makemeunsee$elm_maxims$Theremin$normedPosition = function (_p0) {
 			}),
 		0.5,
 		_elm_lang$core$Basics$toFloat(
-			A2(_elm_lang$core$Basics$min, _p3.width, _p3.height)));
+			A2(_elm_lang$core$Basics$min, _p6.width, _p6.height)));
 	return {
 		ctor: '_Tuple2',
-		_0: _elm_lang$core$Basics$toFloat(_p2.x - ((_p3.width / 2) | 0)) / side,
-		_1: _elm_lang$core$Basics$toFloat(_p2.y - ((_p3.height / 2) | 0)) / side
+		_0: _elm_lang$core$Basics$toFloat(_p5.x - ((_p6.width / 2) | 0)) / side,
+		_1: _elm_lang$core$Basics$toFloat(((_p6.height / 2) | 0) - _p5.y) / side
 	};
 };
-var _makemeunsee$elm_maxims$Theremin_ops = _makemeunsee$elm_maxims$Theremin_ops || {};
-_makemeunsee$elm_maxims$Theremin_ops['=>'] = F2(
+var _makemeunsee$elm_theremin$Theremin_ops = _makemeunsee$elm_theremin$Theremin_ops || {};
+_makemeunsee$elm_theremin$Theremin_ops['=>'] = F2(
 	function (v0, v1) {
 		return {ctor: '_Tuple2', _0: v0, _1: v1};
 	});
-var _makemeunsee$elm_maxims$Theremin$view = function (model) {
-	var _p4 = _makemeunsee$elm_maxims$Theremin$normedPosition(model);
-	var x = _p4._0;
-	var y = _p4._1;
+var _makemeunsee$elm_theremin$Theremin$view = function (model) {
+	var _p7 = _makemeunsee$elm_theremin$Theremin$normedPosition(model);
+	var x = _p7._0;
+	var y = _p7._1;
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8136,109 +8138,107 @@ var _makemeunsee$elm_maxims$Theremin$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_makemeunsee$elm_maxims$Theremin_ops['=>'],
+						_makemeunsee$elm_theremin$Theremin_ops['=>'],
 						'backgroundColor',
-						A2(_makemeunsee$elm_maxims$Theremin$rgb, x, y)),
+						A2(_makemeunsee$elm_theremin$Theremin$rgb, x, y)),
 						A2(
-						_makemeunsee$elm_maxims$Theremin_ops['=>'],
+						_makemeunsee$elm_theremin$Theremin_ops['=>'],
 						'width',
-						_makemeunsee$elm_maxims$Theremin$px(model.size.width)),
+						_makemeunsee$elm_theremin$Theremin$px(model.size.width)),
 						A2(
-						_makemeunsee$elm_maxims$Theremin_ops['=>'],
+						_makemeunsee$elm_theremin$Theremin_ops['=>'],
 						'height',
-						_makemeunsee$elm_maxims$Theremin$px(model.size.height)),
-						A2(_makemeunsee$elm_maxims$Theremin_ops['=>'], 'left', '0'),
-						A2(_makemeunsee$elm_maxims$Theremin_ops['=>'], 'top', '0'),
-						A2(_makemeunsee$elm_maxims$Theremin_ops['=>'], 'position', 'absolute')
+						_makemeunsee$elm_theremin$Theremin$px(model.size.height)),
+						A2(_makemeunsee$elm_theremin$Theremin_ops['=>'], 'left', '0'),
+						A2(_makemeunsee$elm_theremin$Theremin_ops['=>'], 'top', '0'),
+						A2(_makemeunsee$elm_theremin$Theremin_ops['=>'], 'position', 'absolute')
 					]))
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[]));
 };
-var _makemeunsee$elm_maxims$Theremin$updateHelp = F2(
+var _makemeunsee$elm_theremin$Theremin$updateHelp = F2(
 	function (msg, model) {
-		var _p5 = msg;
-		if (_p5.ctor === 'MouseMove') {
+		var _p8 = msg;
+		if (_p8.ctor === 'MouseMove') {
 			return _elm_lang$core$Native_Utils.update(
 				model,
-				{position: _p5._0});
+				{position: _p8._0});
 		} else {
 			return _elm_lang$core$Native_Utils.update(
 				model,
-				{size: _p5._0});
+				{size: _p8._0});
 		}
 	});
-var _makemeunsee$elm_maxims$Theremin$freqMin = 300;
-var _makemeunsee$elm_maxims$Theremin$freqMax = 3000;
-var _makemeunsee$elm_maxims$Theremin$audio = _elm_lang$core$Native_Platform.outgoingPort(
+var _makemeunsee$elm_theremin$Theremin$audio = _elm_lang$core$Native_Platform.outgoingPort(
 	'audio',
 	function (v) {
-		return {gain: v.gain, frequency: v.frequency};
+		return {x: v.x, y: v.y};
 	});
-var _makemeunsee$elm_maxims$Theremin$Model = F2(
+var _makemeunsee$elm_theremin$Theremin$Model = F2(
 	function (a, b) {
 		return {position: a, size: b};
 	});
-var _makemeunsee$elm_maxims$Theremin$SoundModel = F2(
+var _makemeunsee$elm_theremin$Theremin$NormedMousePosition = F2(
 	function (a, b) {
-		return {gain: a, frequency: b};
+		return {x: a, y: b};
 	});
-var _makemeunsee$elm_maxims$Theremin$modelToSoundModel = function (model) {
+var _makemeunsee$elm_theremin$Theremin$normMouse = function (model) {
 	var y = _elm_lang$core$Basics$toFloat(model.position.y);
 	var x = _elm_lang$core$Basics$toFloat(model.position.x);
 	var h = _elm_lang$core$Basics$toFloat(model.size.height);
-	var gain = (0.5 * (h - y)) / h;
+	var yNormed = (h - y) / h;
 	var w = _elm_lang$core$Basics$toFloat(model.size.width);
-	var freq = _makemeunsee$elm_maxims$Theremin$freqMin + (((_makemeunsee$elm_maxims$Theremin$freqMax - _makemeunsee$elm_maxims$Theremin$freqMin) * (w - x)) / w);
-	return A2(_makemeunsee$elm_maxims$Theremin$SoundModel, gain, freq);
+	var xNormed = x / w;
+	return A2(_makemeunsee$elm_theremin$Theremin$NormedMousePosition, xNormed, yNormed);
 };
-var _makemeunsee$elm_maxims$Theremin$update = F2(
+var _makemeunsee$elm_theremin$Theremin$update = F2(
 	function (msg, model) {
-		var newModel = A2(_makemeunsee$elm_maxims$Theremin$updateHelp, msg, model);
+		var newModel = A2(_makemeunsee$elm_theremin$Theremin$updateHelp, msg, model);
 		return {
 			ctor: '_Tuple2',
 			_0: newModel,
-			_1: _makemeunsee$elm_maxims$Theremin$audio(
-				_makemeunsee$elm_maxims$Theremin$modelToSoundModel(newModel))
+			_1: _makemeunsee$elm_theremin$Theremin$audio(
+				_makemeunsee$elm_theremin$Theremin$normMouse(newModel))
 		};
 	});
-var _makemeunsee$elm_maxims$Theremin$ScreenResize = function (a) {
+var _makemeunsee$elm_theremin$Theremin$ScreenResize = function (a) {
 	return {ctor: 'ScreenResize', _0: a};
 };
-var _makemeunsee$elm_maxims$Theremin$initialSizeCmd = A3(
+var _makemeunsee$elm_theremin$Theremin$initialSizeCmd = A3(
 	_elm_lang$core$Task$perform,
-	function (_p6) {
-		return _makemeunsee$elm_maxims$Theremin$ScreenResize(
+	function (_p9) {
+		return _makemeunsee$elm_theremin$Theremin$ScreenResize(
 			A2(_elm_lang$window$Window$Size, 1, 1));
 	},
-	_makemeunsee$elm_maxims$Theremin$ScreenResize,
+	_makemeunsee$elm_theremin$Theremin$ScreenResize,
 	_elm_lang$window$Window$size);
-var _makemeunsee$elm_maxims$Theremin$init = {
+var _makemeunsee$elm_theremin$Theremin$init = {
 	ctor: '_Tuple2',
 	_0: A2(
-		_makemeunsee$elm_maxims$Theremin$Model,
+		_makemeunsee$elm_theremin$Theremin$Model,
 		A2(_elm_lang$mouse$Mouse$Position, 0, 0),
 		A2(_elm_lang$window$Window$Size, 0, 0)),
-	_1: _makemeunsee$elm_maxims$Theremin$initialSizeCmd
+	_1: _makemeunsee$elm_theremin$Theremin$initialSizeCmd
 };
-var _makemeunsee$elm_maxims$Theremin$screenSubscription = _elm_lang$window$Window$resizes(_makemeunsee$elm_maxims$Theremin$ScreenResize);
-var _makemeunsee$elm_maxims$Theremin$MouseMove = function (a) {
+var _makemeunsee$elm_theremin$Theremin$screenSubscription = _elm_lang$window$Window$resizes(_makemeunsee$elm_theremin$Theremin$ScreenResize);
+var _makemeunsee$elm_theremin$Theremin$MouseMove = function (a) {
 	return {ctor: 'MouseMove', _0: a};
 };
-var _makemeunsee$elm_maxims$Theremin$mouseSubscription = _elm_lang$mouse$Mouse$moves(_makemeunsee$elm_maxims$Theremin$MouseMove);
-var _makemeunsee$elm_maxims$Theremin$subscriptions = function (_p7) {
+var _makemeunsee$elm_theremin$Theremin$mouseSubscription = _elm_lang$mouse$Mouse$moves(_makemeunsee$elm_theremin$Theremin$MouseMove);
+var _makemeunsee$elm_theremin$Theremin$subscriptions = function (_p10) {
 	return _elm_lang$core$Platform_Sub$batch(
 		_elm_lang$core$Native_List.fromArray(
-			[_makemeunsee$elm_maxims$Theremin$mouseSubscription, _makemeunsee$elm_maxims$Theremin$screenSubscription]));
+			[_makemeunsee$elm_theremin$Theremin$mouseSubscription, _makemeunsee$elm_theremin$Theremin$screenSubscription]));
 };
-var _makemeunsee$elm_maxims$Theremin$main = {
+var _makemeunsee$elm_theremin$Theremin$main = {
 	main: _elm_lang$html$Html_App$program(
-		{init: _makemeunsee$elm_maxims$Theremin$init, view: _makemeunsee$elm_maxims$Theremin$view, update: _makemeunsee$elm_maxims$Theremin$update, subscriptions: _makemeunsee$elm_maxims$Theremin$subscriptions})
+		{init: _makemeunsee$elm_theremin$Theremin$init, view: _makemeunsee$elm_theremin$Theremin$view, update: _makemeunsee$elm_theremin$Theremin$update, subscriptions: _makemeunsee$elm_theremin$Theremin$subscriptions})
 };
 
 var Elm = {};
 Elm['Theremin'] = Elm['Theremin'] || {};
-_elm_lang$core$Native_Platform.addPublicModule(Elm['Theremin'], 'Theremin', typeof _makemeunsee$elm_maxims$Theremin$main === 'undefined' ? null : _makemeunsee$elm_maxims$Theremin$main);
+_elm_lang$core$Native_Platform.addPublicModule(Elm['Theremin'], 'Theremin', typeof _makemeunsee$elm_theremin$Theremin$main === 'undefined' ? null : _makemeunsee$elm_theremin$Theremin$main);
 
 if (typeof define === "function" && define['amd'])
 {
