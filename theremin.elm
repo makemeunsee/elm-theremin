@@ -8,7 +8,7 @@ import Mouse exposing (Position)
 import Task
 import Color
 import Window exposing (Size)
-import Debug exposing (log)
+import Debug
 
 
 main =
@@ -34,23 +34,23 @@ init =
   ( Model (Position 0 0) (Size 0 0), initialSizeCmd )
 
 
-type alias SoundModel =
-    { gain : Float
-    , frequency : Float
+type alias NormedMousePosition =
+    { x : Float
+    , y : Float
     }
 
 
-modelToSoundModel : Model -> SoundModel
-modelToSoundModel model =
+normMouse : Model -> NormedMousePosition
+normMouse model =
   let
     w = toFloat model.size.width
     h = toFloat model.size.height
     x = toFloat model.position.x
     y = toFloat model.position.y
-    gain = 0.5 * (h - y) / h
-    freq = freqMin + (freqMax - freqMin) * (w - x) / w
+    xNormed = x / w -- TODO logarithmic scaling??
+    yNormed = (h - y) / h
   in
-    SoundModel gain freq
+    NormedMousePosition xNormed yNormed
 
 
 -- UPDATE
@@ -72,7 +72,7 @@ update msg model =
   let
     newModel = updateHelp msg model
   in
-    ( newModel, audio (modelToSoundModel newModel) )
+    ( newModel, audio (normMouse newModel) )
 
 
 updateHelp msg model =
@@ -81,17 +81,13 @@ updateHelp msg model =
     ScreenResize size -> { model | size = size }
 
 
-freqMax = 3000
-freqMin = 300
-
-
 -- PORTS
 
 
 --port suggestions : (List String -> msg) -> Sub msg
 
 
-port audio : SoundModel -> Cmd msg
+port audio : NormedMousePosition -> Cmd msg
 
 
 -- SUBSCRIPTIONS
@@ -141,7 +137,7 @@ normedPosition { position, size } =
       |> toFloat
       |> (*) 0.5
   in
-    ((toFloat (position.x - size.width // 2)) / side, (toFloat (position.y - size.height // 2)) / side)
+    ((toFloat (position.x - size.width // 2)) / side, (toFloat (size.height // 2 - position.y)) / side)
 
 
 px : Int -> String
@@ -155,9 +151,9 @@ rgb x y =
     theta = atan2 y x
     d = sqrt (x*x + y*y)
     thetaR = abs theta
-    thetaG = abs (withinPi (theta - 2 * pi / 3))
-    thetaB = abs (withinPi (theta + 2 * pi / 3))
-    cmp = toComponentString d
+    thetaG = (abs << withinPi) (theta - 2 * pi / 3)
+    thetaB = (abs << withinPi) (theta + 2 * pi / 3)
+    cmp = toString << floor << toComponent d
   in  
     "rgb(" ++ cmp thetaR ++ "," ++ cmp thetaG ++ "," ++ cmp thetaB ++ ")" 
 
@@ -170,11 +166,6 @@ withinPi value =
     value + 2 * pi
   else
     value
-
-
-toComponentString : Float -> Float -> String
-toComponentString d theta =
-  toString (floor (toComponent d theta))
 
 
 toComponent : Float -> Float -> Float
