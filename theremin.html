@@ -31,8 +31,8 @@
 
       var app = Elm.Theremin.fullscreen();
       app.ports.audio.subscribe(function(scalings) {
-        src.frequency.value = 50 + scalings.y * 3000; // src frequency between 50 and 3050 Hz
-        mod.frequency.value = 0.5 + scalings.x * scalings.x * 1000; // modulation frequency between 0.5 and 1000.5 Hz
+        src.frequency.value = 110 * Math.pow(2, scalings.y * 5); // src frequency between 50 and 3050 Hz
+        mod.frequency.value = 0.5 + 1000 * scalings.x * scalings.x; // modulation frequency between 0.5 and 1000.5 Hz
       });
     </script>
   </body>
